@@ -14,6 +14,7 @@
 <div class="music-dock"><button class="btn sound" id="soundBtn" title="Play the original Astrid Dream Universe soundtrack">♫ Play soundtrack</button><button class="btn sound" id="uploadMusicBtn" title="Choose your own music file">＋ Upload</button><label class="volume-wrap" title="Music volume">VOL <input id="musicVolume" type="range" min="0" max="100" value="35"><span id="volumeValue">35%</span></label></div><input id="musicFile" type="file" accept="audio/*" hidden><audio id="ambientAudio" loop></audio>
 
 <section id="home" class="screen active">
+ <div class="home-cosmos" aria-hidden="true"><div class="home-system"><i class="home-sun"></i><i class="home-orbit home-orbit-one"><span class="home-orbit-motion"><b></b></span></i><i class="home-orbit home-orbit-two"><span class="home-orbit-motion"><b></b></span></i><i class="home-orbit home-orbit-three"><span class="home-orbit-motion"><b></b></span></i><i class="home-orbit home-orbit-four"><span class="home-orbit-motion"><b></b></span></i></div></div>
  <div class="home-content">
   <div class="eyebrow">A little corner of the cosmos</div>
   <h1>Dream Universe</h1>
@@ -54,11 +55,16 @@
   <div class="map-coordinates"><span>LOCAL GROUP</span><span id="mapStatus">READY TO EXPLORE</span></div>
  </aside>
  <div id="planetInfo"><strong id="planetName">Luna</strong><p id="planetDesc">A quiet world wrapped in soft moonlight.</p></div>
+ <section id="destinationDetail" class="destination-detail" role="dialog" aria-modal="false" aria-labelledby="detailTitle" aria-hidden="true">
+  <button class="detail-close" id="detailClose" type="button" aria-label="Close destination details">×</button>
+  <div class="detail-art" id="detailArt" aria-hidden="true"></div>
+  <div class="detail-content"><div class="eyebrow" id="detailType">COSMIC DESTINATION</div><h3 id="detailTitle"></h3><p id="detailDescription"></p><div class="detail-inside-label">WHAT YOU’LL FIND</div><p class="detail-inside" id="detailInside"></p><div class="detail-facts" id="detailFacts"></div></div>
+ </section>
  <div class="explore-bottom"><span class="explore-hint">✦ SEARCH A DESTINATION · DRAG TO LOOK AROUND · SCROLL TO ZOOM ✦</span><button class="btn" id="orbitBtn">✦ Starlight journey</button><button class="btn" id="exploreMenuBtn">☰ Adventure menu</button><button class="btn" id="exploreHomeBtn">← Welcome</button></div>
 </section>
 
 <section id="game" class="screen">
- <div class="game-top"><button class="btn" id="menuBtn">← BACK TO UNIVERSE MENU</button><span class="panel-note">MISSION 01 · STAR COLLECTOR</span></div>
+ <div class="game-top"><div class="game-return"><button class="btn" id="menuBtn">← BACK TO MENU</button><button class="btn" id="gameHomeBtn">⌂ HOME</button></div><span class="panel-note">MISSION 01 · STAR COLLECTOR</span></div>
  <div class="game-head"><div class="eyebrow">A tiny cosmic challenge</div><h2>Star Collector</h2><p>Click the glowing crystals to collect them ✦</p></div>
  <div class="game-stats">
   <div class="stat"><small>⭐ Stars</small><strong id="score">0 / 10</strong></div>

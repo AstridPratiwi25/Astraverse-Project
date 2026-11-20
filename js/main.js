@@ -86,6 +86,7 @@ const galaxyGeo=new THREE.BufferGeometry();galaxyGeo.setAttribute('position',new
 galaxyGroup.add(new THREE.Points(galaxyGeo,new THREE.PointsMaterial({size:.17,vertexColors:true,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false})));
 const galaxyCore=new THREE.Sprite(new THREE.SpriteMaterial({map:glow,color:0xffbce9,transparent:true,opacity:.85,blending:THREE.AdditiveBlending,depthWrite:false}));
 galaxyCore.scale.set(7,7,1);galaxyGroup.add(galaxyCore);
+const farGalaxy=galaxyGroup.clone();farGalaxy.position.set(8,-4,-126);farGalaxy.scale.setScalar(.42);farGalaxy.rotation.set(-.3,.4,.35);journeyGroup.add(farGalaxy);
 
 const nebulae=[];
 for(let i=0;i<9;i++){
@@ -101,16 +102,25 @@ function spawn(){crystals.clear();items.length=0;for(let i=0;i<10;i++){const a=i
 spawn();
 const particles=new THREE.Group();scene.add(particles);const bursts=[],ray=new THREE.Raycaster(),pointer=new THREE.Vector2();
 function burst(p,index){for(let i=0;i<15;i++){const m=new THREE.Mesh(new THREE.SphereGeometry(.03+Math.random()*.03,8,8),new THREE.MeshBasicMaterial({color:crystalColors[index%5],transparent:true}));m.position.copy(p);particles.add(m);bursts.push({m,v:new THREE.Vector3(Math.random()-.5,Math.random()-.5,Math.random()-.5).normalize().multiplyScalar(.05+Math.random()*.08),life:1})}}
-const screens=['home','menu','explore','game'];function show(id){screens.forEach(s=>document.getElementById(s).classList.toggle('active',s===id));if(id!=='game')stopGame();$('planetInfo')?.classList.remove('show');if(id!=='game')$('overlay')?.classList.remove('show');system.visible=id!=='explore';journeyGroup.visible=id==='explore';if(id==='explore'){focusedDestination=null;if(mapStatus)mapStatus.textContent='READY TO EXPLORE';camera.position.set(0,0,18);camera.fov=48;camera.updateProjectionMatrix();camera.lookAt(0,0,-35);journeyGroup.rotation.set(0,0,0);}else{camera.position.set(0,5.8,18.5);camera.fov=48;camera.updateProjectionMatrix();camera.lookAt(0,0,0);}}
+const screens=['home','menu','explore','game'];let flightTransition=null;function show(id){screens.forEach(s=>document.getElementById(s).classList.toggle('active',s===id));if(id!=='game')stopGame();$('planetInfo')?.classList.remove('show');$('destinationDetail')?.classList.remove('open');$('destinationDetail')?.setAttribute('aria-hidden','true');if(id!=='game')$('overlay')?.classList.remove('show');system.visible=id!=='explore';journeyGroup.visible=id==='explore';if(id==='explore'){flightTransition=null;focusedDestination=null;if(mapStatus)mapStatus.textContent='READY TO EXPLORE';camera.position.set(0,0,18);camera.fov=48;camera.updateProjectionMatrix();camera.lookAt(0,0,-35);journeyGroup.rotation.set(0,0,0);}else if(id==='home'){flightTransition=null;camera.position.set(0,4.2,15.5);camera.fov=48;camera.updateProjectionMatrix();camera.lookAt(0,-1.1,0);}else{flightTransition=null;camera.position.set(0,5.8,18.5);camera.fov=48;camera.updateProjectionMatrix();camera.lookAt(0,0,0);}}
+function beginExplore(){
+ const fromHome=$('home').classList.contains('active'),fromPosition=camera.position.clone();
+ const fromTarget=fromHome?new THREE.Vector3(0,-1.1,0):new THREE.Vector3(0,0,0);
+ screens.forEach(screen=>document.getElementById(screen).classList.toggle('active',screen==='explore'));
+ stopGame();$('planetInfo').classList.remove('show');$('destinationDetail').classList.remove('open');$('destinationDetail').setAttribute('aria-hidden','true');$('overlay').classList.remove('show');
+ focusedDestination=null;system.visible=true;journeyGroup.visible=true;journeyGroup.rotation.set(0,0,0);document.getElementById('explore').classList.add('entering');
+ flightTransition={started:performance.now(),duration:2600,fromPosition:fromPosition,toPosition:new THREE.Vector3(0,0,-5),fromTarget,toTarget:new THREE.Vector3(0,0,-35),fromFov:camera.fov};
+ if(mapStatus)mapStatus.textContent='ENTERING THE STAR CORRIDOR';
+}
 function toast(t){const el=document.getElementById('toast');el.textContent=t;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),1900)}
 // Searchable map locations share a simple local coordinate system inside the star corridor.
 const destinationCatalog=[
- {name:'Sun',type:'Star',detail:'The star at the heart of our solar system.',position:new THREE.Vector3(0,0,-38),color:0xffd88a},
- {name:'Andromeda Galaxy',type:'Galaxy',detail:'Our neighboring spiral galaxy, 2.5 million light-years away.',position:galaxyGroup.position,color:0xc9aaff},
- {name:'Milky Way',type:'Galaxy',detail:'Our home galaxy, seen from within.',position:new THREE.Vector3(3,-1,-69),color:0x9deaff},
- {name:'Orion Nebula',type:'Nebula',detail:'A stellar nursery glowing in the Orion constellation.',position:new THREE.Vector3(5,2,-60),color:0xff9fd7},
- {name:'Sirius',type:'Star',detail:'The brightest star in Earth’s night sky.',position:new THREE.Vector3(-4,2,-52),color:0xa8ddff},
- {name:'Earth',type:'Planet',detail:'Our pale blue home, orbiting the Sun.',position:new THREE.Vector3(1,-2,-43),color:0x80cfff}
+ {name:'Sun',type:'Star',detail:'The star at the heart of our solar system.',inside:'A vast sphere of hot plasma. Deep inside, its core fuses hydrogen into helium; energy then travels through the radiative and convective zones before shining from the surface.',facts:['Core · 15 million °C','Photosphere','Solar atmosphere'],position:new THREE.Vector3(0,0,-38),color:0xffd88a},
+ {name:'Andromeda Galaxy',type:'Galaxy',detail:'Our neighboring spiral galaxy, about 2.5 million light-years away.',inside:'A giant spiral containing roughly a trillion stars, glowing gas clouds, star-forming regions, and a supermassive black hole at its center. Its broad arms hold countless star systems.',facts:['~1 trillion stars','Spiral arms','Central black hole'],position:galaxyGroup.position,color:0xc9aaff},
+ {name:'Milky Way',type:'Galaxy',detail:'Our home galaxy, seen from within.',inside:'A barred spiral with a bright central bulge, a supermassive black hole called Sagittarius A*, and long arms filled with stars, nebulae, and planetary systems. Our Sun sits in the Orion Arm.',facts:['Sagittarius A*','Orion Arm','Our home'],position:new THREE.Vector3(3,-1,-69),color:0x9deaff},
+ {name:'Orion Nebula',type:'Nebula',detail:'A stellar nursery glowing in the Orion constellation.',inside:'A luminous cloud of gas and dust where young stars are forming. Newborn stars sculpt glowing cavities and dark pillars in the surrounding nebula.',facts:['Star nursery','Gas & dust','Young star cluster'],position:new THREE.Vector3(5,2,-60),color:0xff9fd7},
+ {name:'Sirius',type:'Star',detail:'The brightest star in Earth’s night sky.',inside:'Sirius is a binary star system: brilliant Sirius A and its small, dense white-dwarf companion Sirius B orbit one another.',facts:['Binary system','Sirius A','White dwarf B'],position:new THREE.Vector3(-4,2,-52),color:0xa8ddff},
+ {name:'Earth',type:'Planet',detail:'Our pale blue home, orbiting the Sun.',inside:'A rocky world with a protective atmosphere, liquid-water oceans, shifting continents, and a single natural moon.',facts:['Oceans & continents','One Moon','Habitable world'],position:new THREE.Vector3(1,-2,-43),color:0x80cfff}
 ];
 destinationCatalog.filter(d=>d.name!=='Andromeda Galaxy').forEach(d=>{const marker=new THREE.Sprite(new THREE.SpriteMaterial({map:glow,color:d.color,transparent:true,opacity:.76,blending:THREE.AdditiveBlending,depthWrite:false}));marker.position.copy(d.position);marker.scale.set(1.7,1.7,1);journeyGroup.add(marker);});
 const destinationSearch=document.getElementById('destinationSearch'),destinationResults=document.getElementById('destinationResults'),mapStatus=document.getElementById('mapStatus');let focusedDestination=null;
@@ -125,14 +135,14 @@ function focusDestination(destination){
  focusedDestination=destination;camera.fov=42;camera.updateProjectionMatrix();
  camera.position.set(destination.position.x,destination.position.y+1.5,destination.position.z+15);
  mapStatus.textContent=`VIEWING · ${destination.name.toUpperCase()}`;
- $('planetName').textContent=destination.name;$('planetDesc').textContent=destination.detail;$('planetInfo').classList.add('show');
+ $('planetInfo').classList.remove('show');$('detailType').textContent=destination.type.toUpperCase();$('detailTitle').textContent=destination.name;$('detailDescription').textContent=destination.detail;$('detailInside').textContent=destination.inside;$('detailArt').dataset.kind=destination.type;$('detailFacts').replaceChildren(...destination.facts.map(fact=>{const chip=document.createElement('span');chip.textContent=fact;return chip;}));$('destinationDetail').classList.add('open');$('destinationDetail').setAttribute('aria-hidden','false');
  destinationResults.querySelectorAll('.destination-option').forEach(button=>button.setAttribute('aria-selected',String(button.querySelector('strong').textContent===destination.name)));
 }
-renderDestinations();destinationSearch?.addEventListener('input',()=>renderDestinations(destinationSearch.value));
+renderDestinations();document.getElementById('detailClose').addEventListener('click',()=>{const detail=document.getElementById('destinationDetail');detail.classList.remove('open');detail.setAttribute('aria-hidden','true');});destinationSearch?.addEventListener('input',()=>renderDestinations(destinationSearch.value));
 destinationSearch?.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();destinationResults.querySelector('.destination-option')?.click();}if(event.key==='Escape'){destinationSearch.value='';renderDestinations();destinationSearch.blur();}});
 addEventListener('keydown',event=>{if(event.key==='/'&&!['INPUT','TEXTAREA'].includes(document.activeElement?.tagName)&&$('explore').classList.contains('active')){event.preventDefault();destinationSearch?.focus();}});
-document.getElementById('enterBtn').addEventListener('click',()=>show('menu'));document.getElementById('howBtn').addEventListener('click',()=>show('explore'));document.getElementById('homeBtn').onclick=()=>show('home');document.getElementById('exploreMenuBtn').onclick=()=>show('menu');document.getElementById('exploreHomeBtn').onclick=()=>show('home');document.getElementById('menuBtn').onclick=()=>{document.getElementById('overlay').classList.remove('show');show('menu')};
-document.getElementById('playCard').onclick=()=>{show('game');startGame()};document.getElementById('planetCard').onclick=()=>show('explore');document.getElementById('galleryCard').onclick=()=>toast('Your Star Gallery is coming soon 🌟');
+document.getElementById('enterBtn').addEventListener('click',()=>show('menu'));document.getElementById('howBtn').addEventListener('click',beginExplore);document.getElementById('homeBtn').onclick=()=>show('home');document.getElementById('exploreMenuBtn').onclick=()=>show('menu');document.getElementById('exploreHomeBtn').onclick=()=>show('home');document.getElementById('menuBtn').onclick=()=>{document.getElementById('overlay').classList.remove('show');show('menu')};document.getElementById('gameHomeBtn').onclick=()=>{document.getElementById('overlay').classList.remove('show');show('home')};
+document.getElementById('playCard').onclick=()=>{show('game');startGame()};document.getElementById('planetCard').onclick=beginExplore;document.getElementById('galleryCard').onclick=()=>toast('Your Star Gallery is coming soon 🌟');
 let score=0,best=Number(localStorage.getItem('astridDreamBest')||0),time=60,playing=false,paused=false,interval=null,auto=true;
 const $=id=>document.getElementById(id);$('best').textContent=best;
 function hud(){$('score').textContent=score+' / 10';$('time').textContent=time;$('best').textContent=best;$('bar').style.width=score*10+'%'}
@@ -153,8 +163,45 @@ initSoundtrack({ $, toast });
 initVisualEffects();
 initKeyboardNavigation($);
 
-const clock=new THREE.Clock();function animate(){requestAnimationFrame(animate);const t=clock.getElapsedTime();rotY+=.0007;const isHome=$('home').classList.contains('active');const isJourney=$('explore').classList.contains('active');system.visible=!isJourney;journeyGroup.visible=isJourney;system.position.y=isHome?-2.8:0;crystals.position.y=isHome?-2.8:0;system.rotation.y=rotY;system.rotation.x=rotX;
-if(isJourney){for(let i=0;i<journeyCount;i++){const k=i*3;journeyPositions[k+2]+=journeySpeeds[i];if(journeyPositions[k+2]>20){const a=Math.random()*Math.PI*2,r=3+Math.sqrt(Math.random())*17;journeyPositions[k]=Math.cos(a)*r;journeyPositions[k+1]=Math.sin(a)*r*.68;journeyPositions[k+2]=-125;}}journeyGeo.attributes.position.needsUpdate=true;
-for(let i=0;i<streakCount;i++){const k=i*6;streakPositions[k+2]+=streakSpeeds[i];streakPositions[k+5]+=streakSpeeds[i]*1.12;if(streakPositions[k+2]>20){const a=Math.random()*Math.PI*2,r=3+Math.random()*15,z=-125;streakPositions[k]=Math.cos(a)*r;streakPositions[k+1]=Math.sin(a)*r*.68;streakPositions[k+2]=z;streakPositions[k+3]=streakPositions[k];streakPositions[k+4]=streakPositions[k+1];streakPositions[k+5]=z-1-Math.random()*4;}}
-streakGeo.attributes.position.needsUpdate=true;galaxyGroup.rotation.z=t*.018;journeyGroup.rotation.z=Math.sin(t*.08)*.025;if(!focusedDestination){camera.position.x=Math.sin(t*.16)*.22;camera.position.y=Math.cos(t*.13)*.12;camera.lookAt(0,0,-35);}else{camera.lookAt(focusedDestination.position);}}sun.rotation.y=t*.12;sun.scale.setScalar(1+Math.sin(t*1.4)*.018);planets.forEach((p,i)=>{p.pivot.rotation.y+=p.speed;p.mesh.rotation.y+=.008;p.mesh.position.y=Math.sin(t*.8+i)*.035});stars.rotation.y=t*.003;dust.children.forEach((b,i)=>{b.position.y+=Math.sin(t*.7+i)*.0008});items.forEach(c=>{if(!c.collected){c.group.rotation.y+=.018;c.group.position.y+=Math.sin(t*1.8+c.phase)*.0015;c.gem.rotation.x+=.012}});for(let i=bursts.length-1;i>=0;i--){const p=bursts[i];p.m.position.add(p.v);p.v.multiplyScalar(.97);p.life-=.025;p.m.material.opacity=Math.max(0,p.life);if(p.life<=0){particles.remove(p.m);p.m.geometry.dispose();p.m.material.dispose();bursts.splice(i,1)}}renderer.render(scene,camera)}animate();
+// Keep the lightweight home orbit tilted in sync with the draggable 3D system.
+const homeSystemVisual=document.querySelector('.home-system');
+function syncHomeSystemTilt(){if(!homeSystemVisual)return;homeSystemVisual.style.setProperty('--home-drag-x',`${rotX*180/Math.PI}deg`);homeSystemVisual.style.setProperty('--home-drag-y',`${rotY*180/Math.PI}deg`);}
+document.addEventListener('pointermove',()=>{if(dragging&&$('home').classList.contains('active'))syncHomeSystemTilt();});
+// Explicitly restore the opening solar-system scene on every fresh load.
+show('home');
+syncHomeSystemTilt();
+
+const clock=new THREE.Clock();
+function animate(){
+ requestAnimationFrame(animate);
+ const t=clock.getElapsedTime();rotY+=.0007;
+ const isHome=$('home').classList.contains('active'),isJourney=$('explore').classList.contains('active');
+ system.visible=!isJourney||Boolean(flightTransition);journeyGroup.visible=isJourney;
+ system.position.y=isHome?-1.1:0;system.scale.setScalar(isHome?1.22:1);crystals.position.y=isHome?-1.1:0;system.rotation.y=rotY;system.rotation.x=rotX;
+ const flightBoost=flightTransition?3.2:1;
+ if(isJourney){
+  for(let i=0;i<journeyCount;i++){const k=i*3;journeyPositions[k+2]+=journeySpeeds[i]*flightBoost;if(journeyPositions[k+2]>20){const a=Math.random()*Math.PI*2,r=3+Math.sqrt(Math.random())*17;journeyPositions[k]=Math.cos(a)*r;journeyPositions[k+1]=Math.sin(a)*r*.68;journeyPositions[k+2]=-125;}}
+  journeyGeo.attributes.position.needsUpdate=true;
+  for(let i=0;i<streakCount;i++){const k=i*6;streakPositions[k+2]+=streakSpeeds[i]*flightBoost;streakPositions[k+5]+=streakSpeeds[i]*1.12*flightBoost;if(streakPositions[k+2]>20){const a=Math.random()*Math.PI*2,r=3+Math.random()*15,z=-125;streakPositions[k]=Math.cos(a)*r;streakPositions[k+1]=Math.sin(a)*r*.68;streakPositions[k+2]=z;streakPositions[k+3]=streakPositions[k];streakPositions[k+4]=streakPositions[k+1];streakPositions[k+5]=z-1-Math.random()*4;}}
+  streakGeo.attributes.position.needsUpdate=true;
+  galaxyGroup.rotation.z=t*.035;galaxyGroup.position.x=-5+Math.sin(t*.11)*1.1;galaxyGroup.position.y=2+Math.cos(t*.13)*.7;
+  farGalaxy.rotation.z=-t*.04;farGalaxy.position.x=8+Math.sin(t*.17)*1.3;farGalaxy.position.y=-4+Math.cos(t*.15)*.8;farGalaxy.position.z=-126+Math.sin(t*.1)*3;
+  journeyGroup.rotation.z=Math.sin(t*.08)*.025;
+  if(flightTransition){
+   const raw=THREE.MathUtils.clamp((performance.now()-flightTransition.started)/flightTransition.duration,0,1),ease=raw*raw*(3-2*raw),aim=new THREE.Vector3();
+   camera.position.copy(flightTransition.fromPosition).lerp(flightTransition.toPosition,ease);aim.copy(flightTransition.fromTarget).lerp(flightTransition.toTarget,ease);camera.lookAt(aim);
+   camera.fov=flightTransition.fromFov+Math.sin(raw*Math.PI)*9;camera.updateProjectionMatrix();
+   if(raw>=1){flightTransition=null;system.visible=false;document.getElementById('explore').classList.remove('entering');if(mapStatus)mapStatus.textContent='LOCAL GROUP · IN FLIGHT';}
+  }else if(!focusedDestination){camera.position.x=Math.sin(t*.16)*.22;camera.position.y=Math.cos(t*.13)*.12;camera.lookAt(0,0,-35);}
+  else camera.lookAt(focusedDestination.position);
+ }
+ sun.rotation.y=t*.12;sun.scale.setScalar(1+Math.sin(t*1.4)*.018);
+ planets.forEach((p,i)=>{p.pivot.rotation.y+=p.speed;p.mesh.rotation.y+=.008;p.mesh.position.y=Math.sin(t*.8+i)*.035});
+ stars.rotation.y=t*.003;dust.children.forEach((b,i)=>{b.position.y+=Math.sin(t*.7+i)*.0008});
+ items.forEach(c=>{if(!c.collected){c.group.rotation.y+=.018;c.group.position.y+=Math.sin(t*1.8+c.phase)*.0015;c.gem.rotation.x+=.012}});
+ for(let i=bursts.length-1;i>=0;i--){const p=bursts[i];p.m.position.add(p.v);p.v.multiplyScalar(.97);p.life-=.025;p.m.material.opacity=Math.max(0,p.life);if(p.life<=0){particles.remove(p.m);p.m.geometry.dispose();p.m.material.dispose();bursts.splice(i,1)}}
+ renderer.render(scene,camera);
+ if(!document.documentElement.classList.contains('webgl-ready'))document.documentElement.classList.add('webgl-ready');
+}
+animate();
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2))});
