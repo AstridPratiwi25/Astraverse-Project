@@ -46,9 +46,15 @@
 </section>
 
 <section id="explore" class="screen">
- <div class="explore-head"><div class="eyebrow">A little journey beyond the stars</div><h2>Explore the Universe</h2><p>Walk through a river of starlight. There is always another galaxy ahead.</p></div>
+ <div class="explore-head"><div class="eyebrow">A little journey beyond the stars</div><h2>Explore the Universe</h2><p>Search the cosmos or choose a destination to begin your journey.</p></div>
+ <aside class="destination-panel" aria-label="Galaxy map destinations">
+  <label class="destination-label" for="destinationSearch">GALAXY MAP <span>· DESTINATIONS</span></label>
+  <div class="destination-search"><span aria-hidden="true">⌕</span><input id="destinationSearch" type="search" placeholder="Search stars, planets, galaxies…" autocomplete="off" aria-controls="destinationResults"><kbd>/</kbd></div>
+  <div id="destinationResults" class="destination-results" role="listbox" aria-label="Destinations"></div>
+  <div class="map-coordinates"><span>LOCAL GROUP</span><span id="mapStatus">READY TO EXPLORE</span></div>
+ </aside>
  <div id="planetInfo"><strong id="planetName">Luna</strong><p id="planetDesc">A quiet world wrapped in soft moonlight.</p></div>
- <div class="explore-bottom"><span class="explore-hint">✦ WANDER THROUGH THE GALAXY · DRAG TO LOOK AROUND · SCROLL TO CHANGE YOUR VIEW ✦</span><button class="btn" id="orbitBtn">✦ Starlight journey</button><button class="btn" id="exploreMenuBtn">☰ Adventure menu</button><button class="btn" id="exploreHomeBtn">← Welcome</button></div>
+ <div class="explore-bottom"><span class="explore-hint">✦ SEARCH A DESTINATION · DRAG TO LOOK AROUND · SCROLL TO ZOOM ✦</span><button class="btn" id="orbitBtn">✦ Starlight journey</button><button class="btn" id="exploreMenuBtn">☰ Adventure menu</button><button class="btn" id="exploreHomeBtn">← Welcome</button></div>
 </section>
 
 <section id="game" class="screen">
