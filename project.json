@@ -1,0 +1,10 @@
+{
+  "name": "ASTRAVERSE",
+  "version": "5.2.0",
+  "source": "V5.1 original soundtrack",
+  "modules": [
+    "js/main.js",
+    "js/soundtrack.js",
+    "js/effects.js"
+  ]
+}

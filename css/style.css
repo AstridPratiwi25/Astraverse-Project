@@ -1,0 +1,93 @@
+/* ASTRAVERSE — styles extracted from V5.1 */
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+:root{--bg:#090817;--lav:#c4adff;--pink:#ffb4df;--cyan:#9beaff;--muted:#bdb2d8}
+*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--bg);color:#fff;font-family:'DM Sans',sans-serif}
+#scene{position:fixed;inset:0;z-index:0}#scene canvas{width:100%;height:100%;display:block;cursor:grab;touch-action:none}#scene canvas:active{cursor:grabbing}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 50%,transparent 20%,rgba(5,4,18,.35) 100%),linear-gradient(180deg,rgba(7,6,20,.1),rgba(7,6,20,.2))}
+.screen{position:fixed;inset:0;z-index:2;display:none}.screen.active{display:flex}
+#home{align-items:center;justify-content:center;text-align:center;padding:30px 20px;pointer-events:none}
+.home-content{width:min(760px,95vw);margin-top:-10px;transform:translateY(-145px);position:relative;z-index:3;text-shadow:0 2px 24px #090817aa}
+#home .eyebrow,#home h1,#home .tagline,#home .home-actions{position:relative;z-index:3}
+#home h1{font-size:clamp(44px,7vw,78px)}
+#home .tagline{margin-top:18px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6}#home .eyebrow{margin-bottom:18px}#home .home-actions{gap:14px}#home .btn{min-width:172px}
+#home .home-actions{margin-top:28px}
+#home .scroll-note{z-index:3}
+.eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#c7b9e8;margin-bottom:15px}
+h1{font:600 clamp(46px,8vw,88px)/.98 'Space Grotesk',sans-serif;letter-spacing:-4px;margin:0;background:linear-gradient(100deg,#fff 4%,#ffc0e7 36%,#c0a5ff 68%,#91eaff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 28px #c69bff38)}
+.tagline{font-size:14px;letter-spacing:.5px;color:#d2c8e8;margin:18px 0 0}
+.home-actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:34px}
+.btn{border:1px solid #d8c6ff66;background:#ffffff0d;color:#fff;border-radius:30px;padding:13px 22px;font:600 12px 'DM Sans';cursor:pointer;backdrop-filter:blur(14px);transition:.25s}
+.btn:hover{transform:translateY(-3px);background:#c5a5ff24;border-color:#f2dfff;box-shadow:0 10px 32px #a980ff28}
+.btn.primary{background:linear-gradient(100deg,#c07ce9d9,#9b8beaeb);border-color:#e7caff99;box-shadow:0 8px 35px #a77be944}
+.scroll-note{position:absolute;bottom:27px;left:0;right:0;font-size:10px;letter-spacing:2px;color:#9589b8}
+.corner{position:absolute;top:18px;left:26px;display:flex;align-items:center;gap:11px;z-index:5;font:600 11px 'Space Grotesk';letter-spacing:2px;color:#e5d8ff;text-shadow:0 0 16px #c58cff88}.brand-logo{width:39px;height:39px;display:block;transition:filter .3s,transform .3s;object-fit:cover;border-radius:50%;border:1px solid #c99affaa;box-shadow:0 0 10px #b77affaa,0 0 26px #9d65ff66;background:#090817}
+.music-dock{position:absolute;top:18px;right:25px;z-index:6;display:flex;align-items:center;gap:10px;padding:6px 9px;border:1px solid #d8c6ff33;border-radius:30px;background:#100d20a8;backdrop-filter:blur(14px)}.brand-logo:hover{filter:brightness(1.2) drop-shadow(0 0 10px #c88cff);transform:rotate(-6deg) scale(1.04)}.sound{position:static}.volume-wrap{display:flex;align-items:center;gap:6px;font-size:8px;letter-spacing:1px;color:#c9bce7}.volume-wrap input{width:76px;accent-color:#c69aff;cursor:pointer}.volume-wrap span{min-width:27px;font-size:9px}
+#menu{align-items:center;justify-content:center;padding:28px 20px;text-align:center;pointer-events:none}.panel{pointer-events:auto}
+.panel{width:min(850px,95vw);padding:30px 28px;border:1px solid #d9c7ff40;border-radius:28px;background:linear-gradient(145deg,#17132bd9,#0d0b20e8);backdrop-filter:blur(18px);box-shadow:0 25px 90px #0007}
+.panel h2,.game-head h2{font:600 clamp(28px,4vw,42px) 'Space Grotesk';margin:0;background:linear-gradient(90deg,#ffd0eb,#c5afff,#a1eaff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.panel-sub{font-size:12px;color:var(--muted);margin:8px 0 24px}
+.menu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.menu-card{border:1px solid #d7c4ff30;border-radius:19px;padding:22px 14px 19px;background:linear-gradient(145deg,#ffffff0c,#ffffff04);cursor:pointer;transition:.25s;text-align:center;color:white}
+.menu-card:hover{transform:translateY(-5px);border-color:#d9bdff99;background:#bca2ff14;box-shadow:0 12px 35px #9d7cff20}
+.menu-card .emoji{font-size:30px;display:block;margin-bottom:12px}
+.menu-card strong{font:600 15px 'Space Grotesk';display:block}
+.menu-card small{display:block;color:#a99fc5;font-size:10px;line-height:1.5;margin-top:7px}
+.panel-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:23px;gap:12px}
+.back-link{border:0;background:none;color:#c9bce7;font:500 12px 'DM Sans';cursor:pointer;padding:10px}
+.panel-note{font-size:10px;color:#8f84ac}
+#game{flex-direction:column;align-items:center;text-align:center;padding:24px 16px;pointer-events:none}
+.game-head{pointer-events:none;position:relative;z-index:1}.game-head h2{font-size:clamp(28px,4vw,42px)}
+.game-head p{font-size:11px;color:#c5b9dd;margin:7px 0 0}
+.game-top{position:absolute;top:20px;left:20px;right:20px;z-index:7;display:flex;justify-content:space-between;align-items:center;pointer-events:none}.game-top>*{pointer-events:auto}.game-top .btn{background:#17132ce8;border-color:#d8c6ff88;box-shadow:0 5px 24px #0007}
+.game-stats{display:flex;gap:9px;margin-top:24px}
+.stat{min-width:100px;padding:9px 14px;border:1px solid #d1baff42;border-radius:14px;background:#17132caa;backdrop-filter:blur(12px)}
+.stat small{display:block;font-size:9px;letter-spacing:1.4px;color:#b3a5d2;text-transform:uppercase}.stat strong{display:block;font:600 21px 'Space Grotesk';margin-top:2px}
+.mission{width:min(320px,90vw);margin-top:14px;padding:10px 14px;border:1px solid #c5b0ff30;border-radius:13px;background:#17132c99;backdrop-filter:blur(10px)}
+.mission-title{font-size:9px;letter-spacing:1.4px;color:#e4d6ff}.progress{height:5px;background:#ffffff18;border-radius:8px;margin-top:8px;overflow:hidden}#bar{height:100%;width:0;background:linear-gradient(90deg,#ff91d3,#b69aff,#8deaff);transition:width .25s}
+#message{font-size:10px;color:#cfc3e5;min-height:14px;margin-top:7px}
+.game-bottom{position:absolute;bottom:22px;z-index:6;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:auto}
+.game-buttons{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+#overlay{position:fixed;inset:0;z-index:8;display:none;align-items:center;justify-content:center;padding:20px;background:#080617aa;backdrop-filter:blur(8px)}#overlay.show{display:flex}
+.modal{width:min(380px,92vw);padding:28px 24px;border:1px solid #d6c1ff66;border-radius:24px;background:linear-gradient(145deg,#211936f5,#111027f5);text-align:center;box-shadow:0 20px 80px #0008}
+.modal .emoji{font-size:38px}.modal h3{font:600 27px 'Space Grotesk';margin:10px 0 6px;color:#edc8ff}.modal p{font-size:12px;color:#c8bedf;line-height:1.6}
+#toast{position:fixed;z-index:9;left:50%;bottom:90px;transform:translateX(-50%);padding:10px 16px;border:1px solid #d5c0ff55;border-radius:30px;background:#211936eF;color:#f4eaff;font-size:11px;opacity:0;transition:.3s;pointer-events:none}#toast.show{opacity:1}
+@media(max-width:650px){.game-top{top:10px;left:10px;right:10px}.game-top .btn{padding:9px 12px;font-size:9px}.home-content{transform:translateY(-112px)}#home h1{font-size:clamp(42px,11vw,62px)}.corner{left:13px;top:12px;font-size:8px;gap:8px}.brand-logo{width:32px;height:32px}.music-dock{right:10px;top:10px;gap:6px;padding:4px 7px}.volume-wrap input{width:48px}.sound{padding:10px 13px}.eyebrow{font-size:8px;letter-spacing:3px}h1{letter-spacing:-2px}.tagline{font-size:12px}.home-actions{margin-top:25px}.menu-grid{grid-template-columns:repeat(2,1fr)}.panel{padding:24px 15px}.panel-bottom{margin-top:15px}.panel-note{display:none}.game-top{top:12px;left:12px;right:12px}.game-stats{margin-top:20px;gap:5px}.stat{min-width:80px;padding:7px 8px}.stat strong{font-size:18px}.game-bottom{bottom:12px}}
+
+#explore{align-items:flex-start;justify-content:center;text-align:center;padding:28px 20px;pointer-events:none}
+.explore-head{margin-top:4px;pointer-events:auto}.explore-head h2{font:600 clamp(30px,5vw,48px) 'Space Grotesk';margin:0;background:linear-gradient(90deg,#ffd0eb,#c5afff,#a1eaff);-webkit-background-clip:text;background-clip:text;color:transparent}.explore-head p{font-size:12px;color:#c5b9dd;margin:8px 0}
+.explore-bottom{position:absolute;bottom:24px;left:15px;right:15px;display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap;pointer-events:auto}.explore-hint{font-size:10px;letter-spacing:1px;color:#b8accf;text-shadow:0 2px 10px #090817}.explore-head{padding:12px 22px;border:1px solid #d7c4ff20;border-radius:18px;background:#0d0a1d66;backdrop-filter:blur(8px)}
+#planetInfo{position:absolute;left:50%;top:57%;transform:translate(-50%,-50%) scale(.92);width:min(310px,85vw);padding:20px;border:1px solid #d9c7ff66;border-radius:20px;background:#17132be8;backdrop-filter:blur(16px);box-shadow:0 15px 55px #0008;opacity:0;pointer-events:none;transition:.25s}#planetInfo.show{opacity:1;transform:translate(-50%,-50%) scale(1)}#planetInfo strong{display:block;font:600 20px 'Space Grotesk';color:#f0c9ff}#planetInfo p{font-size:11px;line-height:1.6;color:#c9bfdf;margin:8px 0 0}
+.click-ripple{position:fixed;z-index:20;width:12px;height:12px;border:1px solid #f3caff;border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);animation:ripple .65s ease-out forwards;box-shadow:0 0 14px #d8aaff}
+@keyframes ripple{to{width:90px;height:90px;opacity:0;border-width:2px}}
+.click-spark{position:fixed;z-index:20;pointer-events:none;font-size:12px;animation:sparkFly .85s cubic-bezier(.16,.8,.3,1) forwards;text-shadow:0 0 12px #e9caff}.click-spark.big{font-size:17px}.click-ripple{animation:ripple .8s ease-out forwards}
+@keyframes sparkFly{to{transform:translate(var(--dx),var(--dy)) scale(.2) rotate(90deg);opacity:0}}
+.btn:active,.menu-card:active{transform:scale(.96)}
+@media(max-width:650px){.explore-head{margin-top:55px}.explore-bottom{bottom:15px}.explore-hint{width:100%;text-align:center}}
+
+/* V5.1: classic pointer and constellation navigation */
+#home{pointer-events:none}
+#home .home-content,#home .home-actions,#home .home-actions button{pointer-events:auto}
+#home .home-content{z-index:8}
+#home .home-actions{position:relative;z-index:9}
+.constellation-panel{width:min(900px,96vw);padding:26px 28px 20px;border:1px solid #d9c7ff3d;border-radius:28px;background:linear-gradient(145deg,#17132bd9,#0d0b20df);backdrop-filter:blur(17px);box-shadow:0 25px 90px #0008;pointer-events:auto}
+.constellation-panel h2{font:600 clamp(27px,4vw,40px) 'Space Grotesk';margin:0;background:linear-gradient(90deg,#ffd0eb,#c5afff,#a1eaff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.constellation-panel .panel-sub{margin:7px 0 2px}
+.constellation-board{height:330px;max-width:850px;margin:0 auto;position:relative;isolation:isolate}
+.constellation-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:-1}
+.constellation-lines path{fill:none;stroke:url(#starLine);stroke-width:1.25;stroke-dasharray:4 7;filter:drop-shadow(0 0 5px #c7a5ff88)}
+.constellation-lines circle{fill:#f4d9ff;filter:drop-shadow(0 0 7px #c89aff)}
+.constellation-node{position:absolute;display:flex;flex-direction:column;align-items:center;gap:7px;width:180px;padding:0;border:0;background:transparent;color:#fff;text-align:center;cursor:pointer;transition:transform .25s,filter .25s;z-index:2}
+.constellation-node:hover{transform:translateY(-7px) scale(1.04);filter:drop-shadow(0 0 16px #c79cff88)}
+.node-orbit{width:82px;height:82px;border:1px solid #d7baff88;border-radius:50%;display:grid;place-items:center;position:relative;background:radial-gradient(circle,#b99aff22,#17132b66 65%,transparent 70%);box-shadow:0 0 25px #b88aff22,inset 0 0 18px #b88aff16}
+.node-orbit:before,.node-orbit:after{content:"";position:absolute;inset:-8px;border:1px solid #c8b3ff45;border-radius:50%;transform:rotate(-28deg) scaleY(.35)}
+.node-orbit:after{inset:8px;border-color:#ffbce955;transform:rotate(38deg) scaleY(.55)}
+.node-icon{font-size:33px;color:#f5d7ff;text-shadow:0 0 12px #d7aaff,0 0 25px #9f8cff}
+.constellation-node strong{font:600 14px 'Space Grotesk';letter-spacing:.2px}
+.constellation-node small{font-size:10px;color:#b9adcf;line-height:1.35}
+.node-collector{left:6%;top:38%}.node-explorer{left:calc(50% - 90px);top:3%}.node-gallery{right:5%;top:38%}
+.panel-bottom{position:relative;z-index:3}
+button,.btn,.menu-card,.back-link,a,label[for]{cursor:pointer}
+input[type=range]{cursor:pointer}
+@media(max-width:650px){.constellation-panel{padding:22px 14px 14px}.constellation-board{height:390px}.constellation-lines{opacity:.65}.node-collector{left:0;top:45%}.node-explorer{left:calc(50% - 90px);top:2%}.node-gallery{right:0;top:45%}.constellation-node{width:145px}.node-orbit{width:70px;height:70px}.constellation-node strong{font-size:12px}.constellation-node small{font-size:9px}.constellation-panel .panel-bottom{margin-top:5px}}
+
