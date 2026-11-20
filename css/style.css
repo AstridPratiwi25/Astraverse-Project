@@ -12,6 +12,9 @@
 #home h1{font-size:clamp(44px,7vw,78px)}
 #home .tagline{margin-top:18px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.6}#home .eyebrow{margin-bottom:18px}#home .home-actions{gap:14px}#home .btn{min-width:172px}
 #home .home-actions{margin-top:28px}
+#home h1{filter:drop-shadow(0 0 30px #bd8aff80);text-shadow:0 3px 28px #090817}
+#home .tagline{text-shadow:0 2px 16px #090817}
+#home .home-actions .btn.primary{box-shadow:0 0 18px #bd83ff66,0 0 52px #9665ff55,inset 0 1px #ffffff66}
 #home .scroll-note{z-index:3}
 .eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:#c7b9e8;margin-bottom:15px}
 h1{font:600 clamp(46px,8vw,88px)/.98 'Space Grotesk',sans-serif;letter-spacing:-4px;margin:0;background:linear-gradient(100deg,#fff 4%,#ffc0e7 36%,#c0a5ff 68%,#91eaff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 28px #c69bff38)}
@@ -122,8 +125,10 @@ input[type=range]{cursor:pointer}
 .home-orbit-four{width:80%;height:87%;transform:translate(-50%,-50%) rotate(18deg);border-style:dashed;border-color:#b6a4df30}.home-orbit-four b{width:14px;height:14px;animation-duration:43s;animation-direction:reverse;background:radial-gradient(circle at 30% 25%,#fffbdc 0 5%,#ffdd94 17%,#f39e72 46%,#854766 100%);box-shadow:inset -5px -4px 8px #35172bbb,inset 2px 2px 3px #ffffffa8,0 0 13px #ffd58d}
 @keyframes planet-travel{to{offset-distance:100%}}@keyframes sun-breathe{to{scale:1.12;filter:brightness(1.2)}}@keyframes home-star-drift{to{transform:translate3d(0,-9px,0)}}@keyframes home-star-twinkle{to{opacity:.85}}
 #home .home-content{z-index:3}#home .scroll-note{z-index:3}
+#home .home-content{isolation:isolate;max-width:min(760px,92vw);text-shadow:0 3px 28px #05030d}#home .home-actions{position:relative;z-index:9}
 @media(max-width:650px){.home-system{top:65%;width:116vw;height:82vw;min-height:290px}.home-sun{width:48px;height:48px}.home-orbit-one{width:26%;height:28%}.home-orbit-two{width:46%;height:50%}.home-orbit-three{width:68%;height:74%}.home-orbit-four{width:91%;height:98%}.home-orbit-two b{width:15px;height:15px}.home-orbit-three b{width:21px;height:21px}}
 @media(prefers-reduced-motion:reduce){.home-sun,.home-orbit-motion b,.home-cosmos:before,.home-cosmos:after{animation:none}}
+html[data-active-screen="game"] .corner,html[data-active-screen="game"] .music-dock{display:none!important}
 
 /* Deeper light falloff makes the orbit markers read as small spherical worlds. */
 .home-sun{background:radial-gradient(circle at 28% 24%,#fffdf0 0 4%,#fff0b6 12%,#ffbe73 30%,#ed7595 57%,#633e91 82%,#100d22 100%);box-shadow:inset -16px -12px 22px #100b23dd,inset 3px 3px 7px #fff9,0 0 22px #ffd39d,0 0 60px #f5a8dbb8,0 0 128px #a983ff70}
@@ -136,5 +141,25 @@ input[type=range]{cursor:pointer}
 .home-orbit-four b{background:radial-gradient(circle at 28% 24%,#fffdeb 0 4%,#ffe1a0 14%,#f39c76 38%,#a34f68 69%,#241332 100%);box-shadow:inset -6px -6px 10px #160d20dd,inset 2px 2px 4px #ffffffdd,0 0 13px #ffd58d}
 .webgl-ready #home .home-system{visibility:hidden;opacity:0}
 #explore .destination-panel,#explore .explore-head,#explore .explore-bottom{transition:opacity .45s ease,transform .45s ease}
-#explore.entering .destination-panel,#explore.entering .explore-head,#explore.entering .explore-bottom{opacity:0;transform:translateY(10px);pointer-events:none}
+#home .home-content{display:block!important;visibility:visible!important;opacity:1!important}
 
+
+html[data-active-screen="flight"] .corner{display:none}
+#flight{display:none;pointer-events:none}
+#flight.active{display:block}
+.flight-brand{position:absolute;top:24px;left:28px;display:flex;align-items:center;gap:11px;color:#eee4ff;font:600 12px 'Space Grotesk';letter-spacing:2px;text-shadow:0 0 20px #b98cff88}
+.flight-mark{width:34px;height:34px;display:grid;place-items:center;border:1px solid #d8b8ff;border-radius:50%;color:#e5caff;box-shadow:0 0 16px #bd83ff88;font-size:18px}
+.flight-brand small{margin-left:8px;color:#ad9acb;font-size:8px;letter-spacing:2px}.flight-brand .brand-logo{width:39px;height:39px}
+.flight-status{position:absolute;top:31px;right:clamp(250px,24vw,430px);left:auto;transform:none;white-space:nowrap;color:#d9c9fa;font-size:9px;letter-spacing:2px;text-shadow:0 0 14px #b98cff}
+.flight-status i{display:inline-block;width:6px;height:6px;margin-right:8px;border-radius:50%;background:#9df3df;box-shadow:0 0 12px #9df3df;animation:flight-pulse 1.6s ease-in-out infinite}
+.flight-status span{margin-left:14px;color:#9585b3}
+.flight-return{position:absolute;right:24px;bottom:22px;pointer-events:auto}
+@keyframes flight-pulse{50%{opacity:.35;transform:scale(.75)}}
+@media(max-width:650px){.flight-brand{top:14px;left:14px;font-size:9px}.flight-mark{width:29px;height:29px}.flight-brand small{display:none}.flight-status{top:58px;left:14px;right:auto;font-size:8px}.flight-return{bottom:14px;right:12px;padding:10px 12px;font-size:10px}}
+
+/* Keep the Galaxy Map title in a compact top strip, clear of the 3D focus area. */
+#explore .explore-head{position:absolute;top:clamp(78px,9vh,104px);left:50%;width:min(500px,calc(100vw - 40px));margin:0;padding:9px 18px 10px;transform:translateX(-50%);border-radius:15px;background:linear-gradient(145deg,rgba(20,16,39,.82),rgba(11,9,26,.78));border-color:#d7c4ff30;box-shadow:0 10px 36px #05030b55;z-index:3}
+#explore .explore-head .eyebrow{margin:0 0 3px;font-size:8px;letter-spacing:3px}
+#explore .explore-head h2{font-size:clamp(24px,2.4vw,34px);line-height:1.08}
+#explore .explore-head p{margin:4px 0 0;font-size:10px;line-height:1.35}
+@media(max-width:700px){#explore .explore-head{display:block;top:76px;width:min(430px,calc(100vw - 24px));padding:8px 12px}#explore .explore-head h2{font-size:23px}#explore .explore-head p{font-size:9px}.destination-panel{top:166px;max-height:31vh}}

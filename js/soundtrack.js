@@ -1,7 +1,7 @@
 // ASTRAVERSE — original procedural ambient soundtrack
 export function initSoundtrack({ $, toast }) {
 // Original procedural soundtrack: soft cosmic pads + delicate bell-like arpeggios.
-const soundtrackBtn=$('soundBtn'), uploadMusicBtn=$('uploadMusicBtn');
+const soundtrackBtn=$('soundBtn'), uploadMusicBtn=$('uploadMusicBtn'), musicFile=$('musicFile'), audio=$('ambientAudio'), volume=$('musicVolume');
 let musicCtx=null,musicMaster=null,musicTimer=null,musicStep=0,musicPlaying=false;
 const chordProgression=[
   [261.63,329.63,392.00,493.88],
